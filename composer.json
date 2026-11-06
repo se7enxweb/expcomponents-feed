@@ -42,15 +42,19 @@
         ]
     },
     "description": "This component handles parsing and creating RSS1, RSS2 and ATOM feeds, with support for different feed modules (dc, content, creativeCommons, geo, iTunes).",
-    "homepage": "https://github.com/zetacomponents",
+    "homepage": "https://github.com/se7enxweb/expcomponents-feed",
     "license": "Apache-2.0",
-    "name": "zetacomponents/feed",
+    "name": "se7enxweb/expcomponents-feed",
     "type": "library",
-        "require": {
-            "zetacomponents/base": "~1.8"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~9.0",
-            "zetacomponents/unit-test": "*"
-        }
+    "require": {
+        "php": ">=7.1",
+        "se7enxweb/expcomponents-base": "~1.8"
+    },
+    "replace": {
+        "zetacomponents/feed": "self.version"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "zetacomponents/unit-test": "*"
+    }
 }
