@@ -554,8 +554,27 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
         }
 
         $elementTag->nodeValue = $dataNode;
+        $this->keepEmptyTextNode( $elementTag );
     }
-    
+
+    /**
+     * Gives an element whose text was set to the empty string an empty text node.
+     *
+     * Older libxml2 releases keep an empty text node when the content is set to
+     * '', newer ones keep none, so the same feed was written as <title></title>
+     * or <title/> depending on the library. With the text node it is always
+     * <title></title>.
+     *
+     * @param DOMElement $elementTag
+     */
+    private function keepEmptyTextNode( DOMElement $elementTag )
+    {
+        if ( !$elementTag->hasChildNodes() )
+        {
+            $elementTag->appendChild( $this->xml->createTextNode( '' ) );
+        }
+    }
+
     /**
      * Creates an attribute on an XML node containing the language in it.
      *
@@ -649,6 +668,7 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
         }
 
         $elementTag->nodeValue = $dataNode;
+        $this->keepEmptyTextNode( $elementTag );
     }
 
     /**
