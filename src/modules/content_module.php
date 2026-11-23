@@ -202,7 +202,7 @@ class ezcFeedContentModule extends ezcFeedModule
         {
             $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . 'encoded' );
             $root->appendChild( $elementTag );
-            $elementTag->nodeValue = htmlspecialchars( $this->encoded->__toString(), ENT_NOQUOTES );
+            $this->addText( $xml, $elementTag, $this->encoded->__toString() );
         }
     }
 

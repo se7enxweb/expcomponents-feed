@@ -158,6 +158,27 @@ abstract class ezcFeedModule
     }
 
     /**
+     * Adds $text to the XML element $element as a text node.
+     *
+     * The text node escapes "&", "<" and ">", so $text is plain text. Setting
+     * it with nodeValue instead reads "&" as the start of an entity:
+     * "Tom & Jerry" left the element empty.
+     *
+     * @param DOMDocument $xml The XML document where the element is stored
+     * @param DOMElement $element The element to add the text to
+     * @param string $text The text, not escaped
+     * @ignore
+     */
+    protected function addText( DOMDocument $xml, DOMElement $element, $text )
+    {
+        $text = (string)$text;
+        if ( $text !== '' )
+        {
+            $element->appendChild( $xml->createTextNode( $text ) );
+        }
+    }
+
+    /**
      * Returns true if the element $name is allowed in the current module at the
      * current level (feed or item), and false otherwise.
      *

@@ -308,14 +308,14 @@ class ezcFeedITunesModule extends ezcFeedModule
                         $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . 'new-feed-url' );
                         $root->appendChild( $elementTag );
 
-                        $elementTag->nodeValue = $values->href;
+                        $this->addText( $xml, $elementTag, $values->href );
                         break;
 
                     default:
                         $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . $element );
                         $root->appendChild( $elementTag );
 
-                        $elementTag->nodeValue = $values->__toString();
+                        $this->addText( $xml, $elementTag, $values->__toString() );
                         break;
                 }
             }
