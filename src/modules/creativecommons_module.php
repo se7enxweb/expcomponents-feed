@@ -206,7 +206,7 @@ class ezcFeedCreativeCommonsModule extends ezcFeedModule
             $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . 'license' );
             $root->appendChild( $elementTag );
 
-            $elementTag->nodeValue = $this->license->__toString();
+            $this->addText( $xml, $elementTag, $this->license->__toString() );
         }
     }
 

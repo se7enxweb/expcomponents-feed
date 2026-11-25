@@ -449,7 +449,8 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
         $version = $generator->version;
         $url = $generator->url;
 
-        $elementTag = $this->xml->createElement( 'generator', $name );
+        $elementTag = $this->xml->createElement( 'generator' );
+        $this->addText( $elementTag, $name );
         $root->appendChild( $elementTag );
 
         if ( $version !== null )
@@ -510,6 +511,10 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
         $elementTag = $this->xml->createElement( $element );
         $root->appendChild( $elementTag );
 
+        // Plain text: generating must not change the feed, or a second
+        // generate() escapes it again.
+        $text = $dataNode->__toString();
+
         $attributes = array();
 
         if ( isset( $dataNode->type ) )
@@ -518,14 +523,13 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
             switch ( $val )
             {
                 case 'html':
-                    $dataNode->text = htmlspecialchars( $dataNode->__toString() );
                     $this->addAttribute( $elementTag, 'type', $val );
                     break;
 
                 case 'xhtml':
                     $this->addAttribute( $elementTag, 'type', $val );
                     $this->addAttribute( $elementTag, 'xmlns:xhtml', 'http://www.w3.org/1999/xhtml' );
-                    $xhtmlTag = $this->xml->createElement( 'xhtml:div', $dataNode->__toString() );
+                    $xhtmlTag = $this->xml->createElement( 'xhtml:div' );
                     $elementTag->appendChild( $xhtmlTag );
                     $elementTag = $xhtmlTag;
                     break;
@@ -553,7 +557,7 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
             }
         }
 
-        $elementTag->nodeValue = $dataNode;
+        $this->addText( $elementTag, $text );
         $this->keepEmptyTextNode( $elementTag );
     }
 
@@ -598,6 +602,10 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
         $elementTag = $this->xml->createElement( $element );
         $root->appendChild( $elementTag );
 
+        // Plain text: generating must not change the feed, or a second
+        // generate() escapes it again.
+        $text = $dataNode->__toString();
+
         $attributes = array();
 
         if ( isset( $dataNode->type ) )
@@ -606,14 +614,13 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
             switch ( $val )
             {
                 case 'html':
-                    $dataNode->text = htmlspecialchars( $dataNode->__toString() );
                     $this->addAttribute( $elementTag, 'type', $val );
                     break;
 
                 case 'xhtml':
                     $this->addAttribute( $elementTag, 'type', $val );
                     $this->addAttribute( $elementTag, 'xmlns:xhtml', 'http://www.w3.org/1999/xhtml' );
-                    $xhtmlTag = $this->xml->createElement( 'xhtml:div', $dataNode->__toString() );
+                    $xhtmlTag = $this->xml->createElement( 'xhtml:div' );
                     $elementTag->appendChild( $xhtmlTag );
                     $elementTag = $xhtmlTag;
                     break;
@@ -630,14 +637,13 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
                     }
                     else if ( substr_compare( $val, 'text/', 0, 5, true ) === 0 )
                     {
-                        $dataNode->text = htmlspecialchars( $dataNode->__toString() );
                         $this->addAttribute( $elementTag, 'type', $val );
                         break;
                     }
                     else if ( $val !== null )
                     {
                         // @todo: make 76 and "\n" options?
-                        $dataNode->text = chunk_split( base64_encode( $dataNode->__toString() ), 76, "\n" );
+                        $text = chunk_split( base64_encode( $text ), 76, "\n" );
                         $this->addAttribute( $elementTag, 'type', $val );
                     }
                     else
@@ -667,7 +673,7 @@ class ezcFeedAtom extends ezcFeedProcessor implements ezcFeedParser
             }
         }
 
-        $elementTag->nodeValue = $dataNode;
+        $this->addText( $elementTag, $text );
         $this->keepEmptyTextNode( $elementTag );
     }
 

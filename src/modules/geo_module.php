@@ -222,7 +222,7 @@ class ezcFeedGeoModule extends ezcFeedModule
                 $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . $element );
                 $root->appendChild( $elementTag );
 
-                $elementTag->nodeValue = $this->$element->__toString();
+                $this->addText( $xml, $elementTag, $this->$element->__toString() );
             }
         }
     }

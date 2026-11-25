@@ -181,7 +181,8 @@ abstract class ezcFeedProcessor
             }
             else
             {
-                $meta = $this->xml->createElement( $element, ( $valueElement instanceof ezcFeedElement ) ? $valueElement->__toString() : (string)$valueElement );
+                $meta = $this->xml->createElement( $element );
+                $this->addText( $meta, ( $valueElement instanceof ezcFeedElement ) ? $valueElement->__toString() : (string)$valueElement );
             }
             foreach ( $attributes as $attrName => $attrValue )
             {
@@ -325,6 +326,27 @@ abstract class ezcFeedProcessor
         $val = $this->xml->createTextNode( $value ?? '' );
         $attr->appendChild( $val );
         $node->appendChild( $attr );
+    }
+
+    /**
+     * Adds $text to the XML element $element as a text node.
+     *
+     * The text node escapes "&", "<" and ">", so $text is plain text. Setting
+     * it with createElement( $name, $text ) or nodeValue instead reads "&" as
+     * the start of an entity: "Tom & Jerry" left the element empty, and an
+     * escaped "&amp;" lost its escaping.
+     *
+     * @param DOMElement $element The element to add the text to
+     * @param string $text The text, not escaped
+     * @ignore
+     */
+    protected function addText( DOMElement $element, $text )
+    {
+        $text = (string)$text;
+        if ( $text !== '' )
+        {
+            $element->appendChild( $this->xml->createTextNode( $text ) );
+        }
     }
 
     /**

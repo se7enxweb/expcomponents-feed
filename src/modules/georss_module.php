@@ -199,7 +199,7 @@ class ezcFeedGeoRssModule extends ezcFeedModule
             $elementTag = $xml->createElement( $this->getNamespacePrefix() . ':' . 'point' );
             $root->appendChild( $elementTag );
 
-            $elementTag->nodeValue = "{$this->lat} {$this->long}";
+            $this->addText( $xml, $elementTag, "{$this->lat} {$this->long}" );
         }
     }
 

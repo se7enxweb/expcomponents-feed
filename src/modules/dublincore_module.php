@@ -335,11 +335,11 @@ class ezcFeedDublinCoreModule extends ezcFeedModule
                     switch ( $element )
                     {
                         case 'date':
-                            $elementTag->nodeValue = $values->date->format( 'c' );
+                            $this->addText( $xml, $elementTag, $values->date->format( 'c' ) );
                             break;
 
                         default:
-                            $elementTag->nodeValue = $values->__toString();
+                            $this->addText( $xml, $elementTag, $values->__toString() );
                             break;
                     }
 
