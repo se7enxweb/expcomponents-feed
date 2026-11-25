@@ -1,3 +1,20 @@
+1.4.8 - Wednesday 25 November 2026
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed: Text with "&" is written to the feed escaped once instead of emptying
+  the element: RSS 2.0 category, generator, guid and person fields, the ATOM
+  text constructs, content and generator, and the DublinCore, iTunes,
+  CreativeCommons, Geo, GeoRSS and Content modules add their text through the
+  new protected helper addText() (pull request #1). Generating the same ATOM
+  feed twice gives the same result.
+
+  BEHAVIOUR CHANGE: a caller that escaped these fields itself to work around
+  the bug now gets them escaped twice. Exponential's eZRSSExport detects the
+  fixed component (method_exists( 'ezcFeedProcessor', 'addText' )) and hands
+  it plain text from the kernel change that ships with this release
+  (exponential pull request #372).
+
+
 1.4.7 - Friday 6 November 2026
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
