@@ -2,7 +2,7 @@
 
 This component handles parsing and creating RSS1, RSS2 and ATOM feeds, with support for different feed modules (dc, content, creativeCommons, geo, iTunes).
 
-This is the Exponential fork of [zetacomponents/Feed](https://github.com/zetacomponents/Feed),
+This is the Exponential Components fork of [zetacomponents/Feed](https://github.com/zetacomponents/Feed),
 maintained by 7x (se7en.x) and the Exponential Foundation for Exponential and anyone else
 who uses the Zeta Components Feed component on current PHP versions. All credit for the
 component goes to the Zeta Components authors listed in `composer.json` and `CREDITS`;
